@@ -1,9 +1,9 @@
 package controllers
 
+import helpers.getContinentFromLocation.getContinentFromLocation
 import main.db.DbAdapter
 import main.model.{Item, Location}
 
-import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
 object ItemController {
@@ -38,16 +38,7 @@ object ItemController {
     val locations = filteredContinent.values.toSeq.flatten
     locations
   }
-  @tailrec
-  private def getContinentFromLocation(location:String, iteration: Int = 0): String = {
-    val allLocations = db.getLocations()
-    val thisContinent = allLocations.toList(iteration)
-    val locationsInContinent = thisContinent._2.values.toList.flatten
-    locationsInContinent(iteration) match {
-      case thisLocation if(thisLocation.name == location) => thisContinent._1
-      case _ => getContinentFromLocation(location, iteration + 1)
-    }
-  }
+
   //fetch all items from specific continent given a location inside sed continent
   def fetchItemsFromLocation(location: String): ArrayBuffer[Item] = {
     val parentContinent = getContinentFromLocation(location)
