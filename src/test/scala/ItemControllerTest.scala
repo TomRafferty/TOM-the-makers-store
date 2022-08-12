@@ -6,9 +6,9 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class ItemControllerTest extends AnyWordSpec with Matchers {
   val db = DbAdapter
+  db.dropAndReset
   "ItemController" should {
     "fetch all items" in {
-      db.dropAndReset
       val controller = ItemController
       val itemNames = controller.fetchAllItems.map(x => x.name)
       itemNames should contain("Delicious Soup")
@@ -22,7 +22,6 @@ class ItemControllerTest extends AnyWordSpec with Matchers {
       //I am currently unaware of a better method than this... this is rather ugly.
     }
     "fetch specific item" in {
-      db.dropAndReset
       val controller = ItemController
       val thisItem = controller.fetchItem(7)
       assert(thisItem.id == 7)
@@ -34,7 +33,6 @@ class ItemControllerTest extends AnyWordSpec with Matchers {
       //again, there must be a better way
     }
     "fetch items available in a specific location" in {
-      db.dropAndReset
       val controller = ItemController
       val itemNames = controller.fetchItemsFromLocation("London").map(x => x.name)
       itemNames should contain("Delicious Soup")
@@ -45,7 +43,6 @@ class ItemControllerTest extends AnyWordSpec with Matchers {
       itemNames should contain("Orange Peel")
     }
     "fetch all locations from specific continent" in {
-      db.dropAndReset
       val controller = ItemController
       val locationsNames = controller.fetchLocationsFromContinent("EU").map(x => x.name)
       locationsNames should contain("London")
@@ -68,6 +65,7 @@ class ItemControllerTest extends AnyWordSpec with Matchers {
       assert(fetchThisItem.price == thisNewItem.price)
       assert(fetchThisItem.quantity == thisNewItem.quantity)
       assert(fetchThisItem.availableLocales == thisNewItem.availableLocales)
+      db.dropAndReset
     }
     "update an existing item" in {
       db.dropAndReset
@@ -77,6 +75,7 @@ class ItemControllerTest extends AnyWordSpec with Matchers {
       val updated = controller.fetchItem(0)
       assert(updated.name == thisNewItem.name)
       assert(updated.price == thisNewItem.price)
+      db.dropAndReset
     }
   }
 }
