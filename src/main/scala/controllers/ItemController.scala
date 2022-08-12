@@ -2,17 +2,17 @@ package controllers
 
 import helpers.getContinentFromLocation.getContinentFromLocation
 import main.db.DbAdapter
-import main.model.{Item, Location}
+import models.{Item, Location}
 
 import scala.collection.mutable.ArrayBuffer
 
 object ItemController {
   val db: DbAdapter.type = DbAdapter
   //create new item
-  def createItem(newItem: Item) = {
+  def createItem(newItem: Item): Unit = {
     db.createItem(newItem)
   }
-  def updateItem(itemId: Int, newItem: Item) = {
+  def updateItem(itemId: Int, newItem: Item): Unit = {
     db.updateItem(itemId, newItem)
   }
   //fetch all items
@@ -44,7 +44,7 @@ object ItemController {
     val parentContinent = getContinentFromLocation(location)
     val items = fetchAllItems
     items.filter(item => item.availableLocales match {
-      case x if(x.contains(parentContinent)) => true
+      case x if x.contains(parentContinent) => true
       case _ => false
     })
   }

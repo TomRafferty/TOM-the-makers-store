@@ -1,5 +1,5 @@
 import controllers.ItemController
-import main.model.{Item, Location}
+import models.{Item, Location}
 
 import scala.collection.mutable.ArrayBuffer
 

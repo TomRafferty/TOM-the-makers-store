@@ -1,10 +1,8 @@
 package main.db
 
 import scala.collection.mutable.ArrayBuffer
-import main.model.Item
+import models.{Item, Location}
 import scala.collection.mutable.LinkedHashMap
-import main.model.Location
-import scala.collection.immutable.HashMap
 
 trait DbAdapterBase {
   def dropAndReset: Unit
