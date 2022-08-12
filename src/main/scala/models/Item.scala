@@ -1,4 +1,4 @@
-package main.model
+package models
 
 class Item(val id: Int, val name: String, val price: Double, val quantity: Int, val availableLocales: List[String])
 
